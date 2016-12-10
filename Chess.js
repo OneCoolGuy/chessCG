@@ -235,16 +235,17 @@ function loadPieces(){
 
 function addPawns(){
    for(var i = 0; i < numPawns/2; i++){
-      whitePawns[i].position.y = -10;
-      whitePawns[i].position.x = 100;
-      whitePawns[i].position.z = -340 + 98 * i;
+      whitePawns[i].position.y = -30;
+      whitePawns[i].position.x = 130;
+      whitePawns[i].position.z = -340 + 99 * i;
+      whitePawns[i].scale.set(0.8,0.8,0.8);
       scene.add(whitePawns[i]);
    }
    for(var i = 0; i < numPawns/2; i++){
-      blackPawns[i].position.y = -10;
-      blackPawns[i].position.x = -400;
-      blackPawns[i].position.z = -340 + 98 * i;
-      // blackPawns[i].material.color.setHex( 0x000000 );
+      blackPawns[i].position.y = -30;
+      blackPawns[i].position.x = -380;
+      blackPawns[i].position.z = -340 + 99 * i;
+      blackPawns[i].scale.set(0.8,0.8,0.8);
       scene.add(blackPawns[i]);
    }
    firstTween.onUpdate(function(){
@@ -261,7 +262,7 @@ function addPawns(){
 
 function addBishops(){
    for(var i = 0; i < numPieces/2; i++){
-      whiteBishops[i].position.y = -98;
+      whiteBishops[i].position.y = -100;
       whiteBishops[i].position.x = 345;
       whiteBishops[i].position.z = -135 + 100 * 3 * i;
       whiteBishops[i].scale.set(25.0,25.0,25.0);
@@ -269,7 +270,7 @@ function addBishops(){
       scene.add(whiteBishops[i]);
    }
    for(var i = 0; i < numPieces/2; i++){
-      blackBishops[i].position.y = -98;
+      blackBishops[i].position.y = -100;
       blackBishops[i].position.x = -345;
       blackBishops[i].position.z = -135 + 100 * 3 *i;
       blackBishops[i].scale.set(25.0,25.0,25.0);
@@ -357,10 +358,10 @@ function render() {
 
    renderer.autoClear = true;
    renderer.render(scene, camera);
-   // camera.position.x += ( mouseX - camera.position.x ) * .05;
-   // camera.position.y += ( - mouseY - camera.position.y ) * .05;
+   camera.position.x += ( mouseX - camera.position.x ) * .05;
+   camera.position.y += ( - mouseY - camera.position.y ) * .05;
    // camera.position.x = 500;
-   camera.position.y = 1000;
+   // camera.position.y = 1000;
    if(ready == numParts && start == 0){
       firstTween.start();
       start = 1;
@@ -381,13 +382,13 @@ function onDocumentMouseMove(event) {
 
 function setupTween(){
    currentFirst = {x:100};
-   firstTween = new TWEEN.Tween(currentFirst).to({x: 0}, 1000);
+   firstTween = new TWEEN.Tween(currentFirst).to({x: 30}, 1000);
 
    currentSecond = {x:-400};
-   secondTween = new TWEEN.Tween(currentSecond).to({x: -200}, 1000);
+   secondTween = new TWEEN.Tween(currentSecond).to({x: -170}, 1000);
 
    currentThird = {x:100};
-   thirdTween = new TWEEN.Tween(currentThird).to({x: -100}, 1000);
+   thirdTween = new TWEEN.Tween(currentThird).to({x: -80}, 1000);
    
    currentFourth = {x: -345, z: 55};
    fourthTween = new TWEEN.Tween(currentFourth).to({x: 50, z: -340}, 1000);
