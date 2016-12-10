@@ -5,7 +5,7 @@ var numQueens = 2;
 var numKings = 2;
 
 var firstTween, secondTween, thirdTween, fouthTween, fifthTween;
-var numParts = 4; //number of different Pieces
+var numParts = 6; //number of different Pieces
 var start = 0;
 var ready = 0;
 var mouseX = 0, mouseY = 0;
@@ -31,6 +31,12 @@ scene.add( light );
 var spotLight = new THREE.SpotLight( 0xffffff, 1 );
 spotLight.position.set(0, 0, 0);
 scene.add(spotLight);
+//setup skybox
+
+var urlPrefix = "chess_obj/CoitTower2/";
+var urls = [ urlPrefix + "posx.jpg", urlPrefix + "negx.jpg",
+    urlPrefix + "posy.jpg", urlPrefix + "negy.jpg",
+    urlPrefix + "posz.jpg", urlPrefix + "negz.jpg" ];
 
 //setups function
 //
@@ -46,6 +52,8 @@ var countPawns = 0;
 var countBishops = 0;
 var countQueens = 0;
 var countKings = 0;
+var countRooks = 0;
+var countKnights = 0;
 var objLoader;
 var object;
 var test;
@@ -53,6 +61,10 @@ var whitePawns = [];
 var blackPawns = [];
 var blackBishops = [];
 var whiteBishops = [];
+var blackRooks = [];
+var whiteRooks = [];
+var blackKnights = [];
+var whiteKnights = [];
 var whiteQueen;
 var blackQueen;
 var whiteKing;
@@ -147,6 +159,99 @@ function loadPieces(){
          }
       });
    }
+
+   for(var i = 0; i < numPieces/2; i = i + 1){
+      objLoader = new THREE.OBJLoader();
+      objLoader.setPath( 'chess_obj/' );
+      objLoader.load( 'stauntonrook.obj', function ( object ) {
+         countRooks++;
+
+         object.traverse( function ( child ) {
+
+            if ( child instanceof THREE.Mesh ) {
+
+               child.material = materialWhite;
+
+            }
+
+         } );
+
+         whiteRooks.push(object);
+         if(countRooks == numPieces){
+            addRooks();
+         }
+      });
+   }
+
+   for(var i = 0; i < numPieces/2; i = i + 1){
+      objLoader = new THREE.OBJLoader();
+      objLoader.setPath( 'chess_obj/' );
+      objLoader.load( 'stauntonrook.obj', function ( object ) {
+         countRooks++;
+
+         object.traverse( function ( child ) {
+
+            if ( child instanceof THREE.Mesh ) {
+
+               child.material = materialBlack;
+
+            }
+
+         } );
+
+         blackRooks.push(object);
+         if(countRooks == numPieces){
+            addRooks();
+         }
+      });
+   }
+
+   for(var i = 0; i < numPieces/2; i = i + 1){
+      objLoader = new THREE.OBJLoader();
+      objLoader.setPath( 'chess_obj/' );
+      objLoader.load( 'stauntonknight.obj', function ( object ) {
+         countKnights++;
+
+         object.traverse( function ( child ) {
+
+            if ( child instanceof THREE.Mesh ) {
+
+               child.material = materialWhite;
+
+            }
+
+         } );
+
+         whiteKnights.push(object);
+         if(countKnights == numPieces){
+            addKnights();
+         }
+      });
+   }
+
+   for(var i = 0; i < numPieces/2; i = i + 1){
+      objLoader = new THREE.OBJLoader();
+      objLoader.setPath( 'chess_obj/' );
+      objLoader.load( 'stauntonknight.obj', function ( object ) {
+         countKnights++;
+
+         object.traverse( function ( child ) {
+
+            if ( child instanceof THREE.Mesh ) {
+
+               child.material = materialBlack;
+
+            }
+
+         } );
+
+         blackKnights.push(object);
+         if(countKnights == numPieces){
+            addKnights();
+         }
+      });
+   }
+
    objLoader = new THREE.OBJLoader();
    objLoader.setPath( 'chess_obj/' );
    objLoader.load( 'Creature.obj', function ( object ) {
@@ -308,7 +413,6 @@ function addQueens(){
    whiteQueen.position.z = 55;
    whiteQueen.scale.set(0.3,0.3,0.3);
 
-   console.log(whiteQueen);
    scene.add(whiteQueen);
 
    blackQueen.position.y = -98;
@@ -325,6 +429,50 @@ function addQueens(){
    ready += 1;
 }
 
+function addRooks(){
+   
+   for(var i = 0; i < numPieces/2; i++){
+      whiteRooks[i].position.y = -98;
+      whiteRooks[i].position.x = 345;
+      whiteRooks[i].position.z = -340 + 700 * i;
+      whiteRooks[i].scale.set(0.3,0.3,0.3);
+
+      scene.add(whiteRooks[i]);
+   }
+
+   for(var i = 0; i < numPieces/2; i++){
+      blackRooks[i].position.y = -98;
+      blackRooks[i].position.x = -345;
+      blackRooks[i].position.z = -340 + 700 * i;
+      blackRooks[i].scale.set(0.3,0.3,0.3);
+
+      scene.add(blackRooks[i]);
+   }
+
+   ready += 1;
+}
+function addKnights(){
+   for(var i = 0; i < numPieces/2; i++){
+      whiteKnights[i].position.y = -59;
+      whiteKnights[i].position.x = 345;
+      whiteKnights[i].position.z = -240 + 500 * i;
+      whiteKnights[i].scale.set(0.3,0.3,0.3);
+      whiteKnights[i].rotateY(3.14);
+
+      scene.add(whiteKnights[i]);
+   }
+
+   for(var i = 0; i < numPieces/2; i++){
+      blackKnights[i].position.y = -59;
+      blackKnights[i].position.x = -345;
+      blackKnights[i].position.z = -240 + 500 * i;
+      blackKnights[i].scale.set(0.3,0.3,0.3);
+
+      scene.add(blackKnights[i]);
+   }
+
+   ready += 1;
+}
 var loader = new THREE.TextureLoader();
 
 // load a resource
@@ -337,9 +485,21 @@ loader.load( 'chess_obj/Chess.jpg', function ( texture ) {
    scene.add( meshFloor );
 } );
 
+var materialArray = [];
+materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( urls[0] ) }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture(urls[1]) }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture(urls[2]) }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture(urls[3]) }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture(urls[4]) }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture(urls[5]) }));
+for (var i = 0; i < 6; i++)
+   materialArray[i].side = THREE.BackSide;
+var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
+var skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
+var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
+scene.add( skybox );
 
-
-
+window.onkeypress = handleKeyPress;
 
 requestAnimationFrame(render);
 
@@ -362,10 +522,6 @@ function render() {
    camera.position.y += ( - mouseY - camera.position.y ) * .05;
    // camera.position.x = 500;
    // camera.position.y = 1000;
-   if(ready == numParts && start == 0){
-      firstTween.start();
-      start = 1;
-   }
    if(ready == numParts){
       TWEEN.update();
    }
@@ -379,6 +535,33 @@ function onDocumentMouseMove(event) {
    mouseY = ( event.clientY - windowHalfY ) * 10;
 
 }
+
+function getChar(event) {
+	if (event.which == null) {
+		return String.fromCharCode(event.keyCode) // IE
+	} else if (event.which!=0 && event.charCode!=0) {
+		return String.fromCharCode(event.which)   // the rest
+	} else {
+		return null // special key
+	}
+}
+
+function handleKeyPress(event)
+{
+	var ch = getChar(event);
+	switch(ch)
+   {
+   case 's':
+      if(ready == numParts && start == 0){
+         firstTween.start();
+         start = 1;
+      }
+      break;
+   default:
+      return;
+   }
+}
+
 
 function setupTween(){
    currentFirst = {x:100};
